@@ -2,7 +2,7 @@ import React from "react";
 
 const EntryRules = () => {
   return (
-    <div className="accordion m-5" id="accordionExample">
+    <div className="accordion slide m-auto mt-5" id="accordionExample">
       <div className="accordion-item">
         <h2 className="accordion-header" id="headingOne">
           <button

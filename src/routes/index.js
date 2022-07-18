@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router";
 import Error404 from "../pages/404";
 import Archive from "../pages/Archive";
 import ContactUs from "../pages/ContactUs";
-import EntryForm from "../pages/EntryForm";
+import EntryForm from "../pages/EntryForm/EntryForm";
 import EntryRules from "../pages/EntryRules";
 import Home from "../pages/Home";
 import Payment from "../pages/Payment";
@@ -12,7 +12,7 @@ import Status from "../pages/Status";
 
 const Routes = () => {
   return (
-    <React.Fragment>
+    <React.Fragment> 
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/entry-rules" exact component={EntryRules} />
