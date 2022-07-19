@@ -62,8 +62,8 @@ const EntryForm = () => {
                             <form
                               method="POST"
                               className="needs-validation"
-                              novalidate=""
-                              autocomplete="off"
+                              noValidate=""
+                              autoComplete="off"
                             >
                               <div className="mb-3">
                                 <label className="mb-2 text-muted">E-Mail</label>
@@ -73,7 +73,7 @@ const EntryForm = () => {
                                   className="form-control"
                                   name="email"
                                   required
-                                  autofocus
+                                  autoFocus
                                 />
                                 <div className="invalid-feedback">
                                   Email is invalid
@@ -249,7 +249,7 @@ const EntryForm = () => {
                     <Label className="custom-form-label">Country</Label>
                     <Label className="custom-form-colons"> : </Label>
                     <div className="custom-form-group">
-                      <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                      <select className="form-select form-select-sm" aria-label=".form-select-sm example">
                         <option selected>Select One</option>
                         <option value="Bangladesh">Bangladesh</option>
                         <option value="India">India</option>
