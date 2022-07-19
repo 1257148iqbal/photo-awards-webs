@@ -97,7 +97,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="row row-cols-1 row-cols-md-4 g-4 pb-8 slide m-auto">
+      <div className="row row-cols-1 row-cols-md-4 g-4 pb-8 image-card">
         <div className="col">
           <div className="card h-100">
             <img
