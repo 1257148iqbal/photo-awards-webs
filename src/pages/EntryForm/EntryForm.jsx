@@ -12,6 +12,7 @@ import {
   TabPane
 } from "reactstrap";
 import "../../../src/assets/scss/custom-form.scss";
+import "./style/entryForm.css";
 
 const EntryForm = () => {
   const [active, setActive] = useState("1");
@@ -50,82 +51,255 @@ const EntryForm = () => {
               </NavItem>
             </Nav>
 
-            <TabContent
-              activeTab={active}
-              className="border p-3"
-            >
+            <TabContent activeTab={active} className="border p-3">
               <TabPane tabId="1">
-                <div className="container login__form active">
-                  <div className="row vh-100 w-100 align-self-center">
-                    <div className="col-12 col-lg-6 col-xl-6 px-5">
-                      <div className="row vh-100">
-                        <div className="col align-self-center p-5 w-100">
-                          <h3 className="fw-bolder">WELCOME BACK !</h3>
-                          <p className="fw-lighter fs-6">
-                            Don't have an account,{" "}
-                            <span
-                              id="signUp"
-                              role="button"
-                              className="text-primary"
+                <section className="h-100">
+                  <div className="container h-100">
+                    <div className="row justify-content-sm-center h-100">
+                      <div className="col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                        <div className="card shadow-lg w-100">
+                          <div className="card-body p-5">
+                            <form
+                              method="POST"
+                              className="needs-validation"
+                              novalidate=""
+                              autocomplete="off"
                             >
-                              Sign Up
-                            </span>
-                          </p>
-                          <form action="" className="mt-5">
-                            <div className="mb-3">
-                              <label  className="form-label">
-                                Email
-                              </label>
-                              <input
-                                type="email"
-                                className="form-control text-indent shadow-sm bg-grey-light border-0 rounded-pill fw-lighter fs-7 p-3"
-                                placeholder="name@example.com"
-                              />
-                            </div>
-                            <div className="mb-3">
-                              <label className="form-label">
-                                Password
-                              </label>
-                              <div className="d-flex position-relative">
+                              <div className="mb-3">
+                                <label className="mb-2 text-muted">E-Mail</label>
                                 <input
-                                  type="password"
-                                  className="form-control text-indent auth__password shadow-sm bg-grey-light border-0 rounded-pill fw-lighter fs-7 p-3"
+                                  id="email"
+                                  type="email"
+                                  className="form-control"
+                                  name="email"
+                                  required
+                                  autofocus
                                 />
-                                <span className="password__icon text-primary fs-4 fw-bold bi bi-eye-slash"></span>
+                                <div className="invalid-feedback">
+                                  Email is invalid
+                                </div>
                               </div>
+
+                              <div className="mb-3">
+                                <div className="mb-2 w-100">
+                                  <label className="text-muted">
+                                    Password
+                                  </label>
+                                </div>
+                                <input
+                                  id="password"
+                                  type="password"
+                                  className="form-control"
+                                  name="password"
+                                  required
+                                />
+                                <div className="invalid-feedback">
+                                  Password is required
+                                </div>
+                              </div>
+
+                              <div className="d-flex align-items-center">
+                                <div className="form-check">
+                                  <input
+                                    type="checkbox"
+                                    name="remember"
+                                    id="remember"
+                                    className="form-check-input"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                  >
+                                    Remember Me
+                                  </label>
+                                </div>
+                                <button
+                                  type="submit"
+                                  className="btn btn-primary ms-auto"
+                                >
+                                  Login
+                                </button>
+                              </div>
+                              <a href="/" className="text-center">
+                                Forgot Password?
+                              </a>
+                            </form>
+                          </div>
+                          {/* <div className="card-footer py-3 border-0 bg-primary">
+                            <div className="text-center text-white">
+                              Don't have an account?
+                              <a href="/" className="text-dark text-white">
+                                {` Registration`}
+                              </a>
                             </div>
-                            <div className="col text-center">
-                              <button
-                                type="submit"
-                                className="btn btn-outline-dark btn-lg rounded-pill mt-4 w-100"
-                              >
-                                Login
-                              </button>
-                            </div>
-                          </form>
+                          </div> */}
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </section>
               </TabPane>
 
               <TabPane tabId="2">
                 <form className="row g-3">
+                <h3>Login Info</h3>
+                <Col xs={12} sm={12} md={6} lg={6} xl={6}>
                   <div className="custom-form-main">
-                    <Label className="custom-form-label" >Name</Label>
+                    <Label className="custom-form-label">Username</Label>
                     <Label className="custom-form-colons"> : </Label>
                     <div className="custom-form-group">
-                      <Input id="name" name="name" type="text" bsSize="sm" className="form-control form-control-sm"/>
+                      <Input id="username" name="username" type="text" bsSize="sm" />
                     </div>
                   </div>
+                  </Col>
+                  
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
                   <div className="custom-form-main">
-                    <Label className="custom-form-label" >Email</Label>
+                    <Label className="custom-form-label">Email</Label>
                     <Label className="custom-form-colons"> : </Label>
                     <div className="custom-form-group">
                       <Input id="email" name="email" type="text" bsSize="sm" />
                     </div>
                   </div>
+                  </Col>
+                  
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <div className="custom-form-main">
+                    <Label className="custom-form-label">Password</Label>
+                    <Label className="custom-form-colons"> : </Label>
+                    <div className="custom-form-group">
+                      <Input id="password" name="password" type="text" bsSize="sm" />
+                    </div>
+                  </div>
+                  </Col>
+
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <div className="custom-form-main">
+                    <Label className="custom-form-label">Confirm Password</Label>
+                    <Label className="custom-form-colons"> : </Label>
+                    <div className="custom-form-group">
+                      <Input id="password" name="password" type="text" bsSize="sm" />
+                    </div>
+                  </div>
+                  </Col>
+
+                  <h3>Personal details</h3>
+
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <div className="custom-form-main">
+                    <Label className="custom-form-label">First Name</Label>
+                    <Label className="custom-form-colons"> : </Label>
+                    <div className="custom-form-group">
+                      <Input id="firstName" name="firstName" type="text" bsSize="sm" />
+                    </div>
+                  </div>
+                  </Col>
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <div className="custom-form-main">
+                    <Label className="custom-form-label">Last Name</Label>
+                    <Label className="custom-form-colons"> : </Label>
+                    <div className="custom-form-group">
+                      <Input id="lastName" name="lastName" type="text" bsSize="sm" />
+                    </div>
+                  </div>
+                  </Col>
+                  
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <div className="custom-form-main">
+                    <Label className="custom-form-label">Phone</Label>
+                    <Label className="custom-form-colons"> : </Label>
+                    <div className="custom-form-group">
+                      <Input id="phone" name="phone" type="text" bsSize="sm" />
+                    </div>
+                  </div>
+                  </Col>
+                  
+                  <h3>Contact details</h3>
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <div className="custom-form-main">
+                    <Label className="custom-form-label">Address</Label>
+                    <Label className="custom-form-colons"> : </Label>
+                    <div className="custom-form-group">
+                      <Input id="address" name="address" type="text" bsSize="sm" />
+                    </div>
+                  </div>
+                  </Col>
+                  
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <div className="custom-form-main">
+                    <Label className="custom-form-label">City/Town</Label>
+                    <Label className="custom-form-colons"> : </Label>
+                    <div className="custom-form-group">
+                      <Input id="city" name="city" type="text" bsSize="sm" />
+                    </div>
+                  </div>
+                  </Col>
+
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <div className="custom-form-main">
+                    <Label className="custom-form-label">Postal Code</Label>
+                    <Label className="custom-form-colons"> : </Label>
+                    <div className="custom-form-group">
+                      <Input id="postalcode" name="postalcode" type="text" bsSize="sm" />
+                    </div>
+                  </div>
+                  </Col>
+
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <div className="custom-form-main">
+                    <Label className="custom-form-label">Country</Label>
+                    <Label className="custom-form-colons"> : </Label>
+                    <div className="custom-form-group">
+                      <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Select One</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="India">India</option>
+                        <option value="USA">USA</option>
+                      </select>
+                    </div>
+                  </div>
+                  </Col>
+
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <div className="custom-form-main">
+                    <Label className="custom-form-label">Website</Label>
+                    <Label className="custom-form-colons"> : </Label>
+                    <div className="custom-form-group">
+                      <Input id="website" name="website" type="text" bsSize="sm" />
+                    </div>
+                  </div>
+                  </Col>
+
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <div className="custom-form-main">
+                    <Label className="custom-form-label">Honor</Label>
+                    <Label className="custom-form-colons"> : </Label>
+                    <div className="custom-form-group">
+                      <Input id="honor" name="honor" type="text" bsSize="sm" />
+                    </div>
+                  </div>
+                  </Col>
+
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <div className="custom-form-main">
+                    <Label className="custom-form-label">Organization</Label>
+                    <Label className="custom-form-colons"> : </Label>
+                    <div className="custom-form-group">
+                      <Input id="organization" name="organization" type="text" bsSize="sm" />
+                    </div>
+                  </div>
+                  </Col>
+
+                  <Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                    <div className="form-check">
+                      <input className="form-check-input" type="checkbox" value="" id="invalidCheck"/>
+                      <label className="form-check-label">
+                        Agree to terms and conditions
+                      </label>
+                      <div className="invalid-feedback">
+                        You must agree before submitting.
+                      </div>
+                    </div>
+                  </Col>
                 </form>
               </TabPane>
             </TabContent>

@@ -15,7 +15,7 @@ const ContactUs = () => {
                 id="contactForm"
                 name="contactForm"
               >
-                <div className="row">
+                <div className="row" >
                   <div className="col-md-6 form-group mb-2">
                     <input
                       type="text"
