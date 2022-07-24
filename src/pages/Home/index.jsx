@@ -40,6 +40,8 @@ const Home = () => {
               </p>
             </div>
           </div>
+
+
           <div className="carousel-item slide">
             <img src={Slide2} className="d-block w-100" alt="slide2" />
             <div className="carousel-caption d-none d-md-block">
@@ -49,6 +51,7 @@ const Home = () => {
               </p>
             </div>
           </div>
+          
         </div>
         <button
           className="carousel-control-prev"

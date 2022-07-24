@@ -66,7 +66,7 @@ const EntryForm = () => {
                               autoComplete="off"
                             >
                               <div className="mb-3">
-                                <label className="mb-2 text-muted">E-Mail</label>
+                                <label className="mb-2 text-muted">Email Or Username</label>
                                 <input
                                   id="email"
                                   type="email"
@@ -147,7 +147,7 @@ const EntryForm = () => {
                     <Label className="custom-form-label">Username</Label>
                     <Label className="custom-form-colons"> : </Label>
                     <div className="custom-form-group">
-                      <Input id="username" name="username" type="text" bsSize="sm" />
+                      <Input id="username" name="username" type="text" bsSize="sm" autoFocus />
                     </div>
                   </div>
                   </Col>

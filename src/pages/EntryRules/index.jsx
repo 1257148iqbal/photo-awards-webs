@@ -2,7 +2,7 @@ import React from "react";
 
 const EntryRules = () => {
   return (
-    <div className="accordion slide m-auto mt-5" id="accordionExample">
+    <div className="accordion image-card" id="accordionExample">
       <div className="accordion-item">
         <h2 className="accordion-header" id="headingOne">
           <button
@@ -82,7 +82,7 @@ const EntryRules = () => {
           aria-labelledby="headingThree"
         >
           <div className="accordion-body">
-            <strong>This is the third item's accordion body.</strong> It is
+            <strong>This is the fourth item's accordion body.</strong> It is
             hidden by default, until the collapse plugin adds the appropriate
             classNamees that we use to style each element. These classNamees
             control the overall appearance, as well as the showing and hiding
@@ -121,6 +121,69 @@ const EntryRules = () => {
             overriding our default variables. It's also worth noting that just
             about any HTML,
             though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+
+      <div className="accordion-item">
+        <h2 className="accordion-header" id="headingFive">
+          <button
+            className="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseFive"
+            aria-expanded="true"
+            aria-controls="collapseFive"
+          >
+            Accordion Item #5
+          </button>
+        </h2>
+        <div
+          id="collapseFive"
+          className="accordion-collapse collapse show"
+          aria-labelledby="headingFive"
+        >
+          <div className="accordion-body">
+            <strong>This is the fifth item's accordion body.</strong> It is
+            hidden by default, until the collapse plugin adds the appropriate
+            classNamees that we use to style each element. These classNamees
+            control the overall appearance, as well as the showing and hiding
+            via CSS transitions. You can modify any of this with custom CSS or
+            overriding our default variables. It's also worth noting that just
+            about any HTML,
+            though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+
+      <div className="accordion-item">
+        <h2 className="accordion-header" id="headingSix">
+          <button
+            className="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseSix"
+            aria-expanded="true"
+            aria-controls="collapseSix"            
+          >
+            Accordion Item #6
+          </button>
+        </h2>
+        <div
+          id="collapseSix"
+          className="accordion-collapse collapse show"
+          aria-labelledby="headingSix"
+        >
+          <div className="accordion-body">
+            <strong>This is the sixth item's accordion body.</strong> It is
+            hidden by default, until the collapse plugin adds the appropriate
+            classNamees that we use to style each element. These classNamees
+            control the overall appearance, as well as the showing and hiding
+            via CSS transitions. You can modify any of this with custom CSS or
+            overriding our default variables. It's also worth noting that just
+            about any HTML,
+            though the transition does limit overflow.
+            
           </div>
         </div>
       </div>
