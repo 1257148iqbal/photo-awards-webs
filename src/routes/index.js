@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router";
 import Error404 from "../pages/404";
 import Archive from "../pages/Archive";
 import ContactUs from "../pages/ContactUs";
+import Contest from "../pages/Contest";
 import EntryForm from "../pages/EntryForm/EntryForm";
 import EntryRules from "../pages/EntryRules";
 import Home from "../pages/Home";
@@ -22,6 +23,7 @@ const Routes = () => {
         <Route path="/results" component={Results} />
         <Route path="/archive" component={Archive} />
         <Route path="/contact-us" component={ContactUs} />
+        <Route path="/contest" component={Contest} />
         <Route component={Error404} />
       </Switch>
     </React.Fragment>

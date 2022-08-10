@@ -49,6 +49,10 @@ nav ul li {
 .slide{
     max-width: 1000px;
 }
+
+.page-content{
+    max-width: 1000px;
+}
 .image-card{
     max-width: 1000px;
     margin: 2px auto 50px auto;
