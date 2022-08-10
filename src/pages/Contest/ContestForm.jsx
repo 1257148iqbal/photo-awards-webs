@@ -14,7 +14,7 @@ import "../../../src/assets/scss/custom-form.scss";
 
 const ContestForm = (props) => {
 
-  const {isOpenSidebar, selectedItem, setIsOpenSidebar} = props;
+  const {isOpenSidebar, setIsOpenSidebar} = props;
 
   const { register, handleSubmit } = useForm();
 
@@ -60,7 +60,7 @@ const ContestForm = (props) => {
           name="name"
           type="text"
           placeholder="Enter process name"
-          defaultValue={selectedItem ? selectedItem.name : ''}
+          defaultValue={ ''}
           innerRef={register({ required: true })}
         />
       </FormGroup>
@@ -72,7 +72,7 @@ const ContestForm = (props) => {
           name="shortCode"
           type="text"
           placeholder="Enter short code"
-          defaultValue={selectedItem ? selectedItem.shortCode : ''}
+          defaultValue={ ''}
           innerRef={register({ required: true })}
         />
       </FormGroup>
@@ -99,7 +99,7 @@ const ContestForm = (props) => {
           name="details"
           id="details"
           placeholder="Details"
-          defaultValue={selectedItem ? selectedItem.details : ''}
+          defaultValue={ ''}
           innerRef={register({ required: false })}
         />
       </FormGroup>
@@ -111,7 +111,7 @@ const ContestForm = (props) => {
             id="status"
             name="status"
             type="checkbox"
-            defaultChecked={selectedItem ? selectedItem.status : true}
+            defaultChecked={true}
             innerRef={register({ required: false })}
           />
           <span style={{ marginLeft: '25px' }}> Is Active </span>

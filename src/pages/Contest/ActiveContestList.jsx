@@ -72,6 +72,7 @@ const ActiveContestList = () => {
 
 //#region Events
 const toggleSidebar=()=>{
+  console.log(isOpenSidebar);
   setIsOpenSidebar(!isOpenSidebar)
 }
 //#endregion
@@ -82,7 +83,7 @@ const toggleSidebar=()=>{
       <CardHeader className="d-flex justify-content-between">
           <CardTitle tag="h4">Acitve Contest List</CardTitle>
 
-          <Button onClick={toggleSidebar}>
+          <Button onClick={()=>toggleSidebar()}>
               <PlusSquare size={24} />
           </Button>
       </CardHeader>
