@@ -11,7 +11,6 @@ import {
   TabContent,
   TabPane
 } from "reactstrap";
-import "../../../src/assets/scss/custom-form.scss";
 import "./style/entryForm.css";
 
 const EntryForm = () => {
@@ -135,7 +134,7 @@ const EntryForm = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> 
                 </section>
               </TabPane>
 

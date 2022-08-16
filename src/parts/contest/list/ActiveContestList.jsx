@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import DataTable from "react-data-table-component";
 import { Edit, FileText, PlusSquare, Trash2 } from "react-feather";
-import { Button, Card, CardHeader, CardTitle, DropdownItem } from "reactstrap";
+import { Button, Card, CardHeader, CardTitle } from "reactstrap";
 import { v4 as uuid } from 'uuid';
-import "../../../src/assets/scss/custom-form.scss";
-import ContestForm from "./ContestForm";
+import "../../../../src/assets/scss/custom-form.scss";
+import ContestDetails from "../details/ContestDetails";
+import ContestForm from "../form/ContestForm";
 
 const initialState=[
   {
@@ -21,38 +22,7 @@ const initialState=[
     ]
   }
 ]
-//Columns
-const columns = [
-  {
-    name: "Contest Name",
-    selector: "contestName"
-  },
-  {
-    name: "Start Date",
-    selector: "startDate"
-  },
-  {
-    name: "End Date",
-    selector: "endDate"
-  },
-  {
-    name: 'Actions',
-    maxWidth: '100px',
-    cell: row => (
-      <div className="d-flex gap-2">
-          <DropdownItem className="w-100">
-            <FileText color="skyBlue" size={18} className="mr-50" />            
-          </DropdownItem>
-          <DropdownItem className="w-100" >
-            <Edit color="green" size={18} className="mr-50" />
-          </DropdownItem>
-          <DropdownItem className="w-100" onClick={() => {}}>
-            <Trash2 color="red" size={18} className="mr-50" />
-          </DropdownItem>
-      </div>
-    )
-  }
-]; 
+
 const ActiveContestList = () => {
 //#region Hooks
 
@@ -60,7 +30,9 @@ const ActiveContestList = () => {
 
 //#region State
   const [state] = useState(initialState);
-  const [isOpenSidebar, setIsOpenSidebar] = useState(false)
+  const [isOpenSidebar, setIsOpenSidebar] = useState(false);
+  const [isOpenModalDetails, setIsOpenModalDetails] = useState(false);
+  const [selectItems, setSelectItems] = useState([]);
 //#endregion
 
 //#region Use Effect
@@ -72,9 +44,44 @@ const ActiveContestList = () => {
 
 //#region Events
 const toggleSidebar=()=>{
-  console.log(isOpenSidebar);
   setIsOpenSidebar(!isOpenSidebar)
 }
+const toggleModalDetails=(row)=>{
+  setSelectItems(row)
+  setIsOpenModalDetails(!isOpenModalDetails);
+}
+
+const columns = [
+  {
+    name: "Contest Name",
+    selector: row => row.contestName
+  },
+  {
+    name: "Start Date",
+    selector: row => row.startDate
+  },
+  {
+    name: "End Date",
+    selector: row => row.endDate
+  },
+  {
+    name: 'Actions',
+    maxWidth: '100px',
+    cell: row => (
+      <div className="d-flex gap-2">
+          <div className="w-100 cursor-pointer"  onClick={()=> toggleModalDetails(row)}>
+            <FileText color="skyBlue" size={20} className="mr-50"  />            
+          </div>
+          <div className="w-100 cursor-pointer"  onClick={() => {}} >
+            <Edit color="green" size={20} className="mr-50" />
+          </div>
+          <div className="w-100 cursor-pointer" onClick={() => {}}>
+            <Trash2 color="red" size={20} className="mr-50" />
+          </div>
+      </div>
+    )
+  }
+]; 
 //#endregion
 
   return (
@@ -82,8 +89,7 @@ const toggleSidebar=()=>{
       <Card>
       <CardHeader className="d-flex justify-content-between">
           <CardTitle tag="h4">Acitve Contest List</CardTitle>
-
-          <Button onClick={()=>toggleSidebar()}>
+          <Button onClick={toggleSidebar}>
               <PlusSquare size={24} />
           </Button>
       </CardHeader>
@@ -94,6 +100,7 @@ const toggleSidebar=()=>{
       />
     </Card>
     {isOpenSidebar && <ContestForm isOpenSidebar={isOpenSidebar} setIsOpenSidebar={setIsOpenSidebar} />}
+    {isOpenModalDetails && <ContestDetails isOpenSidebar={isOpenModalDetails} setIsOpenSidebar={setIsOpenModalDetails} selectItems={selectItems} />}
     </div>
   );
 };

@@ -4,12 +4,14 @@ import Error404 from "../pages/404";
 import Archive from "../pages/Archive";
 import ContactUs from "../pages/ContactUs";
 import Contest from "../pages/Contest";
+import ContestSection from "../pages/ContestSection";
 import EntryForm from "../pages/EntryForm/EntryForm";
 import EntryRules from "../pages/EntryRules";
 import Home from "../pages/Home";
 import Payment from "../pages/Payment";
 import Results from "../pages/Results/CountTime";
 import Status from "../pages/Status";
+import ContestSectionForm from "../parts/contestSection/form/ContestSectionForm";
 
 const Routes = () => {
   return (
@@ -24,6 +26,8 @@ const Routes = () => {
         <Route path="/archive" component={Archive} />
         <Route path="/contact-us" component={ContactUs} />
         <Route path="/contest" component={Contest} />
+        <Route path="/contest-section" component={ContestSection} />
+        <Route path="/contest-section-page" component={ContestSectionForm} />
         <Route component={Error404} />
       </Switch>
     </React.Fragment>

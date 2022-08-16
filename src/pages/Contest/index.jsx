@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import {
-    Card,
-    Col, Nav,
-    NavItem,
-    NavLink,
-    Row,
-    TabContent,
-    TabPane
+  Card,
+  Col, Nav,
+  NavItem,
+  NavLink,
+  Row,
+  TabContent,
+  TabPane
 } from "reactstrap";
-import "../../../src/assets/scss/custom-form.scss";
-import ActiveContestList from "./ActiveContestList";
-import ArchiveContestList from "./ArchiveContestList";
+import ActiveContestList from "../../parts/contest/list/ActiveContestList";
+import ArchiveContestList from "../../parts/contest/list/ArchiveContestList";
 
 
 const Contest = () => {
@@ -32,7 +31,7 @@ const Contest = () => {
       <Card className="page-content m-auto mt-5">
         <Row className="rounded rounded-3 p-1">
           <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-            <Nav tabs>
+            <Nav justified pills>
               <NavItem>
                 <NavLink
                   active={active === "1"}

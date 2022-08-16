@@ -1,0 +1,148 @@
+import moment from "moment";
+import React, { useState } from "react";
+import { MinusCircle, PlusCircle } from "react-feather";
+import { useForm } from "react-hook-form";
+import Select from 'react-select';
+import { Button, Card, CardBody, Col, Form, FormFeedback, FormGroup, Input, Label, Row } from "reactstrap";
+import { v4 as uuid } from "uuid";
+
+const ContestSectionForm = () => {
+  const { handleSubmit, errors } = useForm();
+  const defaultDate = moment(new Date()[0]).format("yyyy-MM-DD");
+  //#region  States
+  const [startDate, setStartDate] = useState(defaultDate);
+  const [endDate, setEndDate] = useState(defaultDate);
+  const [contestName, setContestName] = useState("");
+  const [isActive, setIsActive] = useState(true);
+  //#endregion
+
+  //#region Events
+  const onStartDateChange = (dates) => {
+    const startDates = moment(dates[0]).format("yyyy-MM-DD");
+    setStartDate(startDates);
+    setEndDate(startDates);
+  };
+
+  const onEndDateChange = (dates) => {
+    const startDates = moment(dates[0]).format("yyyy-MM-DD");
+    setEndDate(startDates);
+  };
+
+  const onSubmit = () => {
+    const payload = {
+      id: uuid(),
+      contestName,
+      startDate,
+      endDate,
+      isActive,
+    };
+    console.log(payload);
+  };
+  //#endregion
+
+  return (
+    <div className="page-content m-auto">
+      <h3 className="text-center mt-3">Contest Section Create Form</h3>
+      <Card>
+          <CardBody className="card-body-override">
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <Col xs="12" sm="12" md="12" lg="12" xl="12">
+               
+                  <Row  className="rounded rounded-3 mr-1">
+                    <FormGroup tag={Col} xs={6} sm={6} md={3} lg={3} xl={3}>
+                      <Label for="serialNo">Serial No</Label>
+                      <Select
+                        id={`serialNo`}
+                        isSearchable
+                        isClearable
+                        bsSize="sm"
+                        options={[]}
+                        classNamePrefix="select"
+                      />
+                      {errors && errors.serialNo && <FormFeedback>Serial No is Required!</FormFeedback>}
+                    </FormGroup>
+                
+                    <FormGroup tag={Col} xs={12} sm={12} md={4} lg={4} xl={4}>
+                      <Label for="name">Remarks</Label>
+                      <Input
+                        name="remarks"
+                        id="remarks"
+                        placeholder="Remarks"
+                      />
+                    </FormGroup>
+                    <FormGroup tag={Col} xs={2}>
+                      <Button
+                        color="danger"
+                        className="text-nowrap px-1 mt-2"
+                        outline
+                      >
+                        <MinusCircle size={16} className="me-50" />
+                      </Button>
+                    </FormGroup>
+                  </Row>
+              </Col>
+            </Form>
+
+            <Button className="btn-icon ml-2" color="primary" onClick={()=>{}} outline>
+              <PlusCircle size={16} className="me-50" />
+            </Button>
+          </CardBody>
+        </Card>
+      {/* <Form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+        <FormGroup className="mt-3">
+          <Label for="contestName">Contest Name</Label>
+          <Input
+            id="contestName"
+            name="contestName"
+            type="text"
+            placeholder="Enter contest name"
+            defaultValue={contestName}
+            onChange={(e) => setContestName(e.target.value)}
+          />
+        </FormGroup>
+
+        <FormGroup className="mt-3">
+          <CustomDatePicker
+            name="startDate"
+            title="Start Date"
+            value={startDate}
+            onChange={onStartDateChange}
+          />
+        </FormGroup>
+
+        <FormGroup className="mt-3">
+          <CustomDatePicker
+            name="endDate"
+            title="End Date"
+            minDate={startDate}
+            value={endDate}
+            onChange={onEndDateChange}
+          />
+        </FormGroup>
+
+        <FormGroup className="mt-3 mb-3">
+          <Label for="status">
+            <Input
+              style={{ marginLeft: "5px" }}
+              id="status"
+              name="status"
+              type="checkbox"
+              defaultChecked={isActive}
+              onChange={(e) => setIsActive(e.target.checked)}
+            />
+            <span style={{ marginLeft: "25px" }}> Is Running </span>
+          </Label>
+        </FormGroup>
+      </Form> */}
+
+      <Button type="button" className="mr-1" color="primary">
+        Submit
+      </Button>
+      <Button type="cancel" color="danger" outline onClick={() => {}}>
+        Cancel
+      </Button>
+    </div>
+  );
+};
+
+export default ContestSectionForm;

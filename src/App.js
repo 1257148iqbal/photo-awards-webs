@@ -3,6 +3,7 @@ import { ConnectedRouter } from "connected-react-router";
 import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Switch } from "react-router-dom";
+import "../src/assets/scss/custom-form.scss";
 import "./App.css";
 import Footer from "./pages/Footer";
 import Navbar from "./pages/Navbar";

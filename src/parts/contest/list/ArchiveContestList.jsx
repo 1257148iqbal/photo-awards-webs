@@ -3,7 +3,6 @@ import DataTable from "react-data-table-component";
 import { Edit, FileText, Trash2 } from "react-feather";
 import { Card, DropdownItem } from "reactstrap";
 import { v4 as uuid } from 'uuid';
-import "../../../src/assets/scss/custom-form.scss";
 
 const initialState=[
   {
