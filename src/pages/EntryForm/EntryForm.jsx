@@ -18,7 +18,7 @@ const EntryForm = () => {
 
   const toggle = (tab) => {
     if (active !== tab) {
-      setActive(tab);
+      setActive(tab); 
     }
   };
 
