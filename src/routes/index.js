@@ -10,6 +10,7 @@ import EntryRules from "../pages/EntryRules";
 import Home from "../pages/Home";
 import Login from "../pages/Login/Login";
 import Payment from "../pages/Payment";
+import Profile from "../pages/Profile/Profile";
 import Results from "../pages/Results/CountTime";
 import Status from "../pages/Status";
 import ContestSectionForm from "../parts/contestSection/form/ContestSectionForm";
@@ -20,17 +21,18 @@ const Routes = () => {
       <Switch>
         <Route exact path="/dashboard" component={Home} />
         <Route exact path="/" component={Login} />
-        <Route path="/entry-rules" exact component={EntryRules} />
-        <Route path="/entry-form" exact component={EntryForm} />
-        <Route path="/payment" component={Payment} />
-        <Route path="/status" component={Status} />
-        <Route path="/results" component={Results} />
-        <Route path="/archive" component={Archive} />
-        <Route path="/contact-us" component={ContactUs} />
-        <Route path="/contest" component={Contest} />
-        <Route path="/contest-section" component={ContestSection} />
-        <Route path="/contest-section-page" component={ContestSectionForm} />
-        <Route component={Error404} />
+        <Route exact path="/entry-rules" component={EntryRules} />
+        <Route exact path="/entry-form" component={EntryForm} />
+        <Route exact path="/payment" component={Payment} />
+        <Route exact path="/status" component={Status} />
+        <Route exact path="/results" component={Results} />
+        <Route exact path="/archive" component={Archive} />
+        <Route exact path="/contact-us" component={ContactUs} />
+        <Route exact path="/contest" component={Contest} />
+        <Route exact path="/contest-section" component={ContestSection} />
+        <Route exact path="/contest-section-page" component={ContestSectionForm} />
+        <Route exact path="/profile" component={Profile} />
+        <Route exact component={Error404} />
       </Switch>
     </React.Fragment>
   );

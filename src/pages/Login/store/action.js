@@ -8,14 +8,12 @@ export const login = (username, password) => (dispatch) => {
     (user) => user.username === username && user.password === password
   );
 
-  if (data) {
-    console.log(data);
+  if (data) {;
     dispatch({
       type: LOGIN_SUCCESS,
       payload: data,
     });
   } else {
-    console.log(data);
     dispatch({
       type: LOGIN_FAIL,
     });

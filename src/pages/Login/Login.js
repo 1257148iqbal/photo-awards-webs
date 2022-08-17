@@ -1,7 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import { userData } from "../../@fake-db/auth";
@@ -19,16 +18,14 @@ const required = (value) => {
 };
 
 const Login = (props) => {
-  const form = useRef();
-  const checkBtn = useRef();
 
   //#region Hooks
-  const isLoggedIn = useSelector((state) => state.authReducer);
+  const userDetails = useSelector((state) => state.authReducer);
   // const  user  = useSelector(({ authReducer }) => authReducer);
-
-  console.log(isLoggedIn);
+  const { handleSubmit } = useForm();
   const message = useSelector((state) => state.messageReducer);
   const dispatch = useDispatch();
+  console.log(userDetails, message);
   //#endregion
 
   //#region State
@@ -49,11 +46,8 @@ const Login = (props) => {
   };
 
   const handleLogin = (e) => {
-    e.preventDefault();
     setLoading(true);
-    form.current.validateAll();
 
-    if (checkBtn.current.context._errors.length === 0) {
       const data = userData.find(
         (user) => user.username === username && user.password === password
       );
@@ -67,16 +61,10 @@ const Login = (props) => {
           payload: "Please Provide currect Info!",
         });
       }
-    } else {
-      setLoading(false);
-    }
+    
   };
 
   //#endregion
-
-  if (isLoggedIn) {
-    return <Redirect to="/dashboard" />;
-  }
 
   return (
     <div className="col-md-12 page-content m-auto mt-5">
@@ -86,11 +74,11 @@ const Login = (props) => {
             <div className="col-xl-5 col-lg-5 col-md-7 col-sm-9">
               <div className="card shadow-lg w-100">
                 <div className="card-body p-5">
-                  <Form onSubmit={handleLogin} ref={form}>
-                    <div className="mb-3">
-                      <label className="mb-2 text-muted">
-                        Email Or Username
-                      </label>
+                  <Form onSubmit={handleSubmit(handleLogin)}>
+                  <div className="mb-3">
+                      <div className="mb-2 w-100">
+                        <label className="text-muted">Username or Email</label>
+                      </div>
                       <Input
                         id="username"
                         type="username"
@@ -99,7 +87,6 @@ const Login = (props) => {
                         value={username}
                         onChange={onChangeUsername}
                         validations={[required]}
-                        autoFocus
                       />
                     </div>
 
@@ -118,14 +105,13 @@ const Login = (props) => {
                       />
                     </div>
 
-                    {message && (
+                    {message?.message && (
                       <div className="form-group">
                         <div className="alert alert-danger" role="alert">
-                          {message}
+                          {message?.message}
                         </div>
                       </div>
                     )}
-                    <CheckButton style={{ display: "none" }} ref={checkBtn} />
 
                     <div className="d-flex align-items-center justify-content-between">
                       <div className="form-check">

@@ -1,31 +1,39 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useCallback } from "react";
-import { User } from 'react-feather';
+import { User } from "react-feather";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { DropdownItem, DropdownMenu, DropdownToggle, Label, UncontrolledDropdown } from "reactstrap";
+import {
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Label,
+  UncontrolledDropdown
+} from "reactstrap";
 import herderImages from "../../assets/images/logo.png";
 import { logout } from "../Login/store/action";
 
 const Navbar = () => {
-  const  userDetails  = useSelector(state => state.authReducer);
+  const { user } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  console.log(userDetails?.user); 
-
   const logOut = useCallback(() => {
+    history.push("/");
     dispatch(logout());
-  }, [dispatch]);
+  }, [dispatch, history]);
 
+  const addContest = () => {
+    history.push("/contest");
+  };
 
-  const addContest = () =>{
-    history.push("/contest")
-  }
+  const addParticipant = () => {
+    history.push("/contest-section-page");
+  };
 
-  const addParticipant = () =>{
-    history.push("/contest-section-page")
-  }
+  const login = () => {
+    history.push("/");
+  };
 
   return (
     <div className="position-sticky top-0" style={{ zIndex: 999 }}>
@@ -56,7 +64,11 @@ const Navbar = () => {
           >
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link to="/dashboard" className="nav-link active" aria-current="page">
+                <Link
+                  to="/dashboard"
+                  className="nav-link active"
+                  aria-current="page"
+                >
                   Home
                 </Link>
               </li>
@@ -76,7 +88,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="status" className="nav-link">
+                <Link to="/status" className="nav-link">
                   Status
                 </Link>
               </li>
@@ -98,46 +110,40 @@ const Navbar = () => {
             </ul>
           </div>
 
-          {userDetails ? (
+          {user ? (
             <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link to={"/profile"} className="nav-link">
-                  {userDetails.username}
-                </Link>
-              </li>
-              <li className="nav-item">
-                <a href="/" className="nav-link" onClick={logOut}>
-                  Logout
-                </a>
-              </li>
+              <UncontrolledDropdown nav>
+                <DropdownToggle nav>
+                  <User className="icon-size" />
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem onClick={addContest}>
+                    <Label className="text-dark cursor-pointer">
+                      Add Contest
+                    </Label>
+                  </DropdownItem>
+                  <DropdownItem onClick={addParticipant}>
+                    <Label className="text-dark cursor-pointer">
+                      Contest Section
+                    </Label>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to={"/profile"} className="nav-link">
+                      {`Profile: ${user.username}`}
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem onClick={logOut}>Logout</DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
             </div>
           ) : (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link to={"/"} className="nav-link">
+                <Link to="/" className="nav-link" onClick={login}>
                   Login
                 </Link>
               </li>
-              <UncontrolledDropdown nav>
-                <DropdownToggle nav>
-                  <User className="icon-size"/>
-                </DropdownToggle>
-                <DropdownMenu right>
-                      <DropdownItem onClick={addContest}>
-                        <Label className="text-dark cursor-pointer"> Add Contest </Label>
-                      </DropdownItem>
-                      <DropdownItem onClick={addParticipant}>
-                        <Label className="text-dark cursor-pointer"> Participant </Label>
-                      </DropdownItem>
-                      <DropdownItem>
-                        <Label className="text-dark cursor-pointer"> Profile</Label>
-                      </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem onClick={logOut}>
-                    Logout
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
             </div>
           )}
         </div>
