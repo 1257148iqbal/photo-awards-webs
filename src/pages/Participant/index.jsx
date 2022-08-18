@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Row, Toast } from "reactstrap";
+import { Card, Col, Row } from "reactstrap";
 import { v4 as uuid } from "uuid";
 
 const imagesArray = [
@@ -46,11 +46,16 @@ const imagesArray = [
 ];
 
 const Participant = () => {
+  //#region state
   const [images, setImages] = useState([]);
   const [imageURLS, setImageURLs] = useState(imagesArray);
+//#endregion
 
+//#region Hooks
   useEffect(() => {}, []);
+//#endregion
 
+//#region events
   const multipleImagesUpload = (sectionIndex) => {
     const newImageUrls = [];
     images.forEach((image) => newImageUrls?.push(URL.createObjectURL(image)));
@@ -63,18 +68,22 @@ const Participant = () => {
       file: {},
     }));
     imagesInfo.imagesInfos = imagesInfos;
+    _imageURLS[sectionIndex]=imagesInfo;
     setImageURLs(_imageURLS);
   };
+
+
 
   const onImageChange = (e, sectionIndex) => {
     const files = [...e.target.files];
     if (files.length > 4) {
-      Toast("Images upload less than 5");
+      alert("Images upload less than 5");
     } else {
       setImages(files);
       multipleImagesUpload(sectionIndex);
     }
   };
+  //#endregion
   return (
     <Card className="page-content m-auto mt-5">
       <Row className="rounded rounded-3">

@@ -14,15 +14,13 @@ import herderImages from "../../assets/images/logo.png";
 import { logout } from "../Login/store/action";
 
 const Navbar = () => {
+  //#endregion Hooks
   const { user } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const history = useHistory();
+//#endregion
 
-  const logOut = useCallback(() => {
-    history.push("/");
-    dispatch(logout());
-  }, [dispatch, history]);
-
+//#region Events
   const addContest = () => {
     history.push("/contest");
   };
@@ -35,6 +33,11 @@ const Navbar = () => {
     history.push("/participant");
   };
 
+  const logOut = useCallback(() => {
+    history.push("/login");
+    dispatch(logout());
+  }, [dispatch, history]);
+  //#endregion
 
 
   return (
