@@ -12,7 +12,8 @@ const Profile = () => {
   return (
     <div className="container page-content  m-auto mt-5">
       <header className="jumbotron">
-        <h3>
+       <div className="p-3">
+       <h3>
           <strong>Profile/UserName: {currentUser.username}</strong>
         </h3>
         {currentUser && (
@@ -23,8 +24,12 @@ const Profile = () => {
             <Link className="btn btn-primary mt-2" role="button" to="/contest-section-page">
               Contest Section
             </Link>
+            <Link className="btn btn-primary mt-2" role="button" to="/participant">
+            Participate
+            </Link>
           </div>
         )}
+       </div>
         
       </header>
  

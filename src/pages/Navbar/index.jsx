@@ -27,13 +27,15 @@ const Navbar = () => {
     history.push("/contest");
   };
 
-  const addParticipant = () => {
+  const onContestSection = () => {
     history.push("/contest-section-page");
   };
 
-  const login = () => {
-    history.push("/");
+  const onParticipant = () => {
+    history.push("/participant");
   };
+
+
 
   return (
     <div className="position-sticky top-0" style={{ zIndex: 999 }}>
@@ -65,7 +67,7 @@ const Navbar = () => {
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link
-                  to="/dashboard"
+                  to="/"
                   className="nav-link active"
                   aria-current="page"
                 >
@@ -122,9 +124,14 @@ const Navbar = () => {
                       Add Contest
                     </Label>
                   </DropdownItem>
-                  <DropdownItem onClick={addParticipant}>
+                  <DropdownItem onClick={onContestSection}>
                     <Label className="text-dark cursor-pointer">
                       Contest Section
+                    </Label>
+                  </DropdownItem>
+                  <DropdownItem onClick={onParticipant}>
+                    <Label className="text-dark cursor-pointer">
+                    Participant
                     </Label>
                   </DropdownItem>
                   <DropdownItem>
@@ -140,7 +147,7 @@ const Navbar = () => {
           ) : (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link to="/" className="nav-link" onClick={login}>
+                <Link to="/login" className="nav-link">
                   Login
                 </Link>
               </li>

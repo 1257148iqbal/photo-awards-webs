@@ -1,13 +1,14 @@
 import moment from 'moment';
-import React, { useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { v4 as uuid } from 'uuid';
 import CustomDatePicker from "../../../components/custom/CustomDatePicker";
 import Sidebar from "../../../components/custom/Sidebar";
+import { serverDate } from '../../../utilitis/Utils';
 
 const ContestForm = (props) => {
-  const { isOpenSidebar, setIsOpenSidebar } = props;
+  const { isOpenSidebar, setIsOpenSidebar, selectItems } = props;
 
   const { handleSubmit } = useForm();
 const defaultDate = moment(new Date()[0]).format("yyyy-MM-DD");
@@ -18,15 +19,25 @@ const defaultDate = moment(new Date()[0]).format("yyyy-MM-DD");
   const [isActive, setIsActive] = useState(true);
   //#endregion
 
+  //#region Hooks
+useEffect(() => {
+  setStartDate(serverDate(selectItems?.startDate));
+  setEndDate(serverDate(selectItems?.endDate))
+}, [selectItems])
+
+console.log(selectItems);
+
+  //#endregion
+
   //#region Events
   const onStartDateChange = (dates) => {
-    const startDates = moment(dates[0]).format("yyyy-MM-DD");
+    const startDates = serverDate(dates[0]);
     setStartDate(startDates);
     setEndDate(startDates);
   };
   
   const onEndDateChange = (dates) => {
-    const startDates = moment(dates[0]).format("yyyy-MM-DD");
+    const startDates = serverDate(dates[0])
     setEndDate(startDates);
   };
 
@@ -44,7 +55,8 @@ const defaultDate = moment(new Date()[0]).format("yyyy-MM-DD");
   //#endregion
   
   return (
-    <Sidebar
+  <Fragment>
+      <Sidebar
       size="lg"
       title="New Contest Form"
       headerClassName="mb-1"
@@ -61,7 +73,7 @@ const defaultDate = moment(new Date()[0]).format("yyyy-MM-DD");
             name="contestName"
             type="text"
             placeholder="Enter contest name"
-            defaultValue={contestName}
+            defaultValue={selectItems? selectItems?.contestName : contestName}
             onChange={e=>setContestName(e.target.value)}
           />
         </FormGroup>
@@ -93,7 +105,7 @@ const defaultDate = moment(new Date()[0]).format("yyyy-MM-DD");
               id="status"
               name="status"
               type="checkbox"
-              defaultChecked={isActive}
+              defaultChecked={selectItems? selectItems?.isRunning: isActive}
               onChange={e=>setIsActive(e.target.checked)}
             />
             <span style={{ marginLeft: "25px" }}> Is Running </span>
@@ -113,6 +125,7 @@ const defaultDate = moment(new Date()[0]).format("yyyy-MM-DD");
         </Button>
       </Form>
     </Sidebar>
+  </Fragment>
   );
 };
 

@@ -9,6 +9,7 @@ import EntryForm from "../pages/EntryForm/EntryForm";
 import EntryRules from "../pages/EntryRules";
 import Home from "../pages/Home";
 import Login from "../pages/Login/Login";
+import Participant from "../pages/Participant";
 import Payment from "../pages/Payment";
 import Profile from "../pages/Profile/Profile";
 import Results from "../pages/Results/CountTime";
@@ -19,8 +20,8 @@ const Routes = () => {
   return (
     <React.Fragment> 
       <Switch>
-        <Route exact path="/dashboard" component={Home} />
-        <Route exact path="/" component={Login} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/login" component={Login} />
         <Route exact path="/entry-rules" component={EntryRules} />
         <Route exact path="/entry-form" component={EntryForm} />
         <Route exact path="/payment" component={Payment} />
@@ -30,6 +31,7 @@ const Routes = () => {
         <Route exact path="/contact-us" component={ContactUs} />
         <Route exact path="/contest" component={Contest} />
         <Route exact path="/contest-section" component={ContestSection} />
+        <Route exact path="/participant" component={Participant} />
         <Route exact path="/contest-section-page" component={ContestSectionForm} />
         <Route exact path="/profile" component={Profile} />
         <Route exact component={Error404} />

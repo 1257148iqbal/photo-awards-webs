@@ -18,10 +18,10 @@ const initialState = [
   {
     rowId: uuid(),
     sectionName: "",
-    imageCount: 0,
-    imageLength: 0,
-    imageWidth: 0,
-    imageSize: 0,
+    imageCount: '4',
+    imageLength: '1080',
+    imageWidth: '1920',
+    imageSize: '2',
   },
 ];
 
@@ -36,18 +36,11 @@ const ContestSectionForm = () => {
   //#endregion
   //#region  Events
   // add new row
-  const isValid = state.every((i) => i.sectionName);
 
-  const handleAdd = () => {
-    const section = {
-      rowId: uuid(),
-      sectionName: "",
-      imageCount: 0,
-      imageLength: 0,
-      imageWidth: 0,
-      imageSize: 0,
-    };
-    setState((prev) => [...prev, section]);
+  const handleAdd = (section, idx) => {
+    const newIndex = idx +1;
+   state.splice(newIndex, 0, {...section, rowId: uuid(), sectionName: ""} );
+    setState((prev) => [...prev]);
   };
 
   // remove  row
@@ -71,6 +64,8 @@ const ContestSectionForm = () => {
 
   // for submit
   const handleModalSubmit = () => {
+  const isValid = state.every((i) => i.sectionName);
+
     if (isValid) {
       const payload = {
         sectionInfos: state.map((d) => ({
@@ -113,7 +108,7 @@ const ContestSectionForm = () => {
                     />
                   </FormGroup>
                   <FormGroup tag={Col} xs={12} sm={6} md={2} lg={2} xl={2}>
-                    <Label for="imageSize">Image Size</Label>
+                    <Label for="imageSize">Image Size(MB)</Label>
                     <Input
                       name="imageSize"
                       id="imageSize"
@@ -123,7 +118,7 @@ const ContestSectionForm = () => {
                     />
                   </FormGroup>
                   <FormGroup tag={Col} xs={12} sm={6} md={2} lg={2} xl={2}>
-                    <Label for="imageLength">Image Length</Label>
+                    <Label for="imageLength">Image Length(px)</Label>
                     <Input
                       name="imageLength"
                       id="imageLength"
@@ -133,7 +128,7 @@ const ContestSectionForm = () => {
                     />
                   </FormGroup>
                   <FormGroup tag={Col} xs={12} sm={6} md={2} lg={2} xl={2}>
-                    <Label for="imageWidth">Image Width</Label>
+                    <Label for="imageWidth">Image Width(px)</Label>
                     <Input
                       name="imageWidth"
                       id="imageWidth"
@@ -143,23 +138,22 @@ const ContestSectionForm = () => {
                     />
                   </FormGroup>
 
-                  <FormGroup tag={Col} xs={1} className="d-flex">
-                    <Button
-                      color="danger"
-                      className="btn-icon mt-3 w-50"
+                  <FormGroup tag={Col} xs={1} className="d-flex gap-1">
+                    <button
                       disabled={state.length === 1}
+                      className="mt-4 bg-danger text-white"
                       onClick={() => handleDelete(idx)}
                     >
-                      <MinusCircle size={16} className="me-40" />
-                    </Button>
+                      <MinusCircle size={16}  />
+                    </button>
                     {state.length === idx + 1 && (
-                      <Button
-                        className="btn-icon mt-3"
-                        color="primary"
-                        onClick={handleAdd}
+                      <button
+                        type="button"
+                        className="mt-4 bg-primary text-white"
+                        onClick={()=>handleAdd(section, idx)}
                       >
-                        <PlusCircle size={16} className="me-50" />
-                      </Button>
+                        <PlusCircle size={16}  />
+                      </button>
                     )}
                   </FormGroup>
                 </Row>

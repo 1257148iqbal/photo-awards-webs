@@ -29,8 +29,8 @@ const Login = (props) => {
   //#endregion
 
   //#region State
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("admin");
+  const [password, setPassword] = useState("demo123");
   const [loading, setLoading] = useState(false);
   //#endregion
 
@@ -54,7 +54,7 @@ const Login = (props) => {
 
       if (data) {
         dispatch(login(username, password));
-        props.history.push("/dashboard");
+        props.history.push("/profile");
       } else {
         dispatch({
           type: SET_MESSAGE,
