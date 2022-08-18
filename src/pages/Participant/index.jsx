@@ -87,16 +87,23 @@ const Participant = () => {
                     <h3 className="text-center font-weight-bold ">
                       {`SectionName: ${imageSrc.sectionName}`}
                     </h3>
-                    <div>
-                      <span className="btn btn-primary btn-file">
-                        Browse...
+                    <div className="d-flex justify-content-between align-items-center m-1">
+                      <div>
                         <input
                           type="file"
+                          id="upload"
                           multiple
                           accept="image/*"
                           onChange={(e) => onImageChange(e, sectionIndex)}
+                          hidden
                         />
-                      </span>
+                        <label className="upload" for="upload">
+                          Upload Files
+                        </label>
+                      </div>
+                      <div>
+                          <button>Remove All</button>
+                      </div>
                     </div>
                   </div>
 
