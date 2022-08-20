@@ -49,13 +49,13 @@ const Participant = () => {
   //#region state
   const [images, setImages] = useState([]);
   const [imageURLS, setImageURLs] = useState(imagesArray);
-//#endregion
+  //#endregion
 
-//#region Hooks
+  //#region Hooks
   useEffect(() => {}, []);
-//#endregion
+  //#endregion
 
-//#region events
+  //#region events
   const multipleImagesUpload = (sectionIndex) => {
     const newImageUrls = [];
     images.forEach((image) => newImageUrls?.push(URL.createObjectURL(image)));
@@ -68,11 +68,26 @@ const Participant = () => {
       file: {},
     }));
     imagesInfo.imagesInfos = imagesInfos;
-    _imageURLS[sectionIndex]=imagesInfo;
+    _imageURLS[sectionIndex] = imagesInfo;
     setImageURLs(_imageURLS);
   };
 
-
+  const singleImagesUpload = (e, sectionIndex, imgageIndex) => {
+    console.log(sectionIndex);
+    // const newImageUrls = [];
+    // images.forEach((image) => newImageUrls?.push(URL.createObjectURL(image)));
+    // const _imageURLS = [...imageURLS];
+    // const imagesInfo = _imageURLS[sectionIndex];
+    // const imagesInfos = newImageUrls?.map((item) => ({
+    //   imagesId: uuid(),
+    //   imageURLS: item,
+    //   imageName: "",
+    //   file: {},
+    // }));
+    // imagesInfo.imagesInfos = imagesInfos;
+    // _imageURLS[sectionIndex] = imagesInfo;
+    // setImageURLs(_imageURLS);
+  };
 
   const onImageChange = (e, sectionIndex) => {
     const files = [...e.target.files];
@@ -83,6 +98,34 @@ const Participant = () => {
       multipleImagesUpload(sectionIndex);
     }
   };
+
+  const removedAll = (sectionIndex) => {
+    const _imageURLS = [...imageURLS];
+    const imagesInfo = _imageURLS[sectionIndex];
+    const deleteIamges = {
+      ...imagesInfo,
+      imagesInfos: imagesInfo.imagesInfos.map((i) => ({
+        ...i,
+        imageURLS: "",
+        imageName: "",
+      })),
+    };
+    _imageURLS[sectionIndex] = deleteIamges;
+    setImageURLs(_imageURLS);
+  };
+
+  const removedSingle = (sectionIndex, imgageIndex) => {
+    const _imageURLS = [...imageURLS];
+    const _imagesIndex = _imageURLS[sectionIndex].imagesInfos[imgageIndex];
+    const newObject = {
+      ..._imagesIndex,
+      imageName: "",
+      imageURLS: "",
+    };
+    _imageURLS[sectionIndex].imagesInfos[imgageIndex] = newObject;
+    setImageURLs(_imageURLS);
+  };
+
   //#endregion
   return (
     <Card className="page-content m-auto mt-5">
@@ -106,18 +149,20 @@ const Participant = () => {
                           onChange={(e) => onImageChange(e, sectionIndex)}
                           hidden
                         />
-                        <label className="upload" for="upload">
+                        <label className="upload" htmlFor="upload">
                           Upload Files
                         </label>
                       </div>
                       <div>
-                          <button>Remove All</button>
+                        <button onClick={() => removedAll(sectionIndex)}>
+                          Remove All
+                        </button>
                       </div>
                     </div>
                   </div>
 
                   <div className="d-flex justify-content-around flex-wrap p-3">
-                    {imageSrc.imagesInfos?.map((imageInfo) => {
+                    {imageSrc.imagesInfos?.map((imageInfo, imgageIndex) => {
                       return (
                         <Card
                           elevation={3}
@@ -146,9 +191,15 @@ const Participant = () => {
                               type="file"
                               className="custom-file-input"
                               accept="image/*"
-                              onChange={() => {}}
+                              onChange={(e) => singleImagesUpload(e,sectionIndex, imgageIndex)}
                             />
-                            <button>Remove</button>
+                            <button
+                              onClick={() =>
+                                removedSingle(sectionIndex, imgageIndex)
+                              }
+                            >
+                              Remove
+                            </button>
                           </div>
                         </Card>
                       );
