@@ -47,7 +47,6 @@ const imagesArray = [
 
 const Participant = () => {
   //#region state
-  const [images, setImages] = useState([]);
   const [imageURLS, setImageURLs] = useState(imagesArray);
   //#endregion
 
@@ -56,49 +55,42 @@ const Participant = () => {
   //#endregion
 
   //#region events
-  const multipleImagesUpload = (sectionIndex) => {
-    const newImageUrls = [];
-    images.forEach((image) => newImageUrls?.push(URL.createObjectURL(image)));
-    const _imageURLS = [...imageURLS];
-    const imagesInfo = _imageURLS[sectionIndex];
-    const imagesInfos = newImageUrls?.map((item) => ({
-      imagesId: uuid(),
-      imageURLS: item,
-      imageName: "",
-      file: {},
-    }));
-    imagesInfo.imagesInfos = imagesInfos;
-    _imageURLS[sectionIndex] = imagesInfo;
-    setImageURLs(_imageURLS);
-  };
-
-  const singleImagesUpload = (e, sectionIndex, imgageIndex) => {
-    console.log(sectionIndex);
-    // const newImageUrls = [];
-    // images.forEach((image) => newImageUrls?.push(URL.createObjectURL(image)));
-    // const _imageURLS = [...imageURLS];
-    // const imagesInfo = _imageURLS[sectionIndex];
-    // const imagesInfos = newImageUrls?.map((item) => ({
-    //   imagesId: uuid(),
-    //   imageURLS: item,
-    //   imageName: "",
-    //   file: {},
-    // }));
-    // imagesInfo.imagesInfos = imagesInfos;
-    // _imageURLS[sectionIndex] = imagesInfo;
-    // setImageURLs(_imageURLS);
-  };
-
-  const onImageChange = (e, sectionIndex) => {
+  const multipleImagesUpload = (e, sectionIndex) => {
     const files = [...e.target.files];
     if (files.length > 4) {
       alert("Images upload less than 5");
     } else {
-      setImages(files);
-      multipleImagesUpload(sectionIndex);
+      const newImageUrls = [];
+      files.forEach((image) => newImageUrls?.push(URL.createObjectURL(image)));
+      const _imageURLS = [...imageURLS];
+      const imagesInfo = _imageURLS[sectionIndex];
+      const imagesInfos = newImageUrls?.map((item) => ({
+        imagesId: uuid(),
+        imageURLS: item,
+        imageName: "",
+        file: {},
+      }));
+      imagesInfo.imagesInfos = imagesInfos;
+      _imageURLS[sectionIndex] = imagesInfo;
+      setImageURLs(_imageURLS);
     }
+   
   };
 
+  const singleImagesUpload = (e, sectionIndex, imgageIndex) => {
+    const files = e.target.files[0];
+    files["ImageUrl"] = URL.createObjectURL(files);
+    const _imageURLS = [...imageURLS];
+    const _imagesIndex = _imageURLS[sectionIndex].imagesInfos[imgageIndex];
+    const newObject = {
+      ..._imagesIndex,
+      imageName: "",
+      imageURLS: files?.ImageUrl,
+    };
+    _imageURLS[sectionIndex].imagesInfos[imgageIndex] = newObject;
+    setImageURLs(_imageURLS);
+  };
+  
   const removedAll = (sectionIndex) => {
     const _imageURLS = [...imageURLS];
     const imagesInfo = _imageURLS[sectionIndex];
@@ -146,7 +138,7 @@ const Participant = () => {
                           id="upload"
                           multiple
                           accept="image/*"
-                          onChange={(e) => onImageChange(e, sectionIndex)}
+                          onChange={(e) => multipleImagesUpload(e, sectionIndex)}
                           hidden
                         />
                         <label className="upload" htmlFor="upload">
