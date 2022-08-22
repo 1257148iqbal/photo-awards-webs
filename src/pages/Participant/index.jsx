@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { Card, Col, Row } from "reactstrap";
 import { v4 as uuid } from "uuid";
@@ -56,6 +57,7 @@ const Participant = () => {
 
   //#region events
   const multipleImagesUpload = (e, sectionIndex) => {
+    console.log(sectionIndex);
     const files = [...e.target.files];
     if (files.length > 4) {
       alert("Images upload less than 5");
@@ -74,7 +76,6 @@ const Participant = () => {
       _imageURLS[sectionIndex] = imagesInfo;
       setImageURLs(_imageURLS);
     }
-   
   };
 
   const singleImagesUpload = (e, sectionIndex, imgageIndex) => {
@@ -90,7 +91,7 @@ const Participant = () => {
     _imageURLS[sectionIndex].imagesInfos[imgageIndex] = newObject;
     setImageURLs(_imageURLS);
   };
-  
+
   const removedAll = (sectionIndex) => {
     const _imageURLS = [...imageURLS];
     const imagesInfo = _imageURLS[sectionIndex];
@@ -118,6 +119,16 @@ const Participant = () => {
     setImageURLs(_imageURLS);
   };
 
+  const onChangeEvents = (e, sectionIndex, imgageIndex) => {
+    const { value } = e.target;
+
+    const _imageURLS = _.cloneDeep(imageURLS);
+    const _imagesIndex = _imageURLS[sectionIndex].imagesInfos[imgageIndex];
+    _imagesIndex.imageName = value;
+    _imageURLS[sectionIndex].imagesInfos[imgageIndex] = _imagesIndex;
+    setImageURLs(_imageURLS);
+  };
+
   //#endregion
   return (
     <Card className="page-content m-auto mt-5">
@@ -138,7 +149,9 @@ const Participant = () => {
                           id="upload"
                           multiple
                           accept="image/*"
-                          onChange={(e) => multipleImagesUpload(e, sectionIndex)}
+                          onChange={(e) =>
+                            multipleImagesUpload(e, sectionIndex)
+                          }
                           hidden
                         />
                         <label className="upload" htmlFor="upload">
@@ -166,16 +179,17 @@ const Participant = () => {
                               src={imageInfo.imageURLS}
                               alt="not fount"
                               width="220"
-                              height="210"
+                              height="200"
                               style={{ borderRadius: 5, marginTop: 8 }}
-                            />
+                            />                      
                             <input
                               type="text"
-                              name="fileName"
+                              id={`imageName-${imageSrc.id}${imageInfo.imagesId}`}
+                              name="imageName"
                               value={imageInfo.imageName}
                               placeholder="Image Name"
                               style={{ width: 220 }}
-                              onChange={() => {}}
+                              onChange={(e) => onChangeEvents(e, sectionIndex, imgageIndex )}
                             />
                           </div>
                           <div className="d-flex p-2">
@@ -183,7 +197,10 @@ const Participant = () => {
                               type="file"
                               className="custom-file-input"
                               accept="image/*"
-                              onChange={(e) => singleImagesUpload(e,sectionIndex, imgageIndex)}
+                              alt="Empty"
+                              onChange={(e) =>
+                                singleImagesUpload(e, sectionIndex, imgageIndex)
+                              }
                             />
                             <button
                               onClick={() =>
