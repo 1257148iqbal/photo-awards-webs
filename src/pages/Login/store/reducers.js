@@ -12,7 +12,6 @@ import {
   
     switch (type) {
       case LOGIN_SUCCESS:
-        console.log(payload);
         return {
           ...state,
           isLoggedIn: true,

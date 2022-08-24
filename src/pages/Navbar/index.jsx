@@ -26,7 +26,7 @@ const Navbar = () => {
   };
 
   const onContestSection = () => {
-    history.push("/contest-section-page");
+    history.push("/contest-section");
   };
 
   const onParticipant = () => {

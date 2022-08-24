@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { MinusCircle, PlusCircle } from "react-feather";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import CreateableSelect from "react-select/creatable";
 import {
   Button,
   Card,
@@ -18,18 +21,27 @@ const initialState = [
   {
     rowId: uuid(),
     sectionName: "",
-    imageCount: '4',
-    imageLength: '1080',
-    imageWidth: '1920',
-    imageSize: '2',
+    imageCount: "4",
+    imageLength: "1080",
+    imageWidth: "1920",
+    imageSize: "2",
   },
 ];
 
 const ContestSectionForm = () => {
-  const { handleSubmit } = useForm();
+
+  //#region Hooks
+  const history = useHistory();
+  const {items} = useSelector(({contestReducer}) => contestReducer);
+  const contestDDL= items.map(item=>({
+    label: item.contestName,
+    value: item.id,
+  }))
+  //#endregion
+  const {handleSubmit } = useForm();
   //#region State
-  // eslint-disable-next-line no-unused-vars
   const [state, setState] = useState(initialState);
+  const [contest, setContest] = useState(null);
   //#endregion
   //#region UDFs
 
@@ -38,8 +50,8 @@ const ContestSectionForm = () => {
   // add new row
 
   const handleAdd = (section, idx) => {
-    const newIndex = idx +1;
-   state.splice(newIndex, 0, {...section, rowId: uuid(), sectionName: ""} );
+    const newIndex = idx + 1;
+    state.splice(newIndex, 0, { ...section, rowId: uuid(), sectionName: "" });
     setState((prev) => [...prev]);
   };
 
@@ -64,15 +76,16 @@ const ContestSectionForm = () => {
 
   // for submit
   const handleModalSubmit = () => {
-  const isValid = state.every((i) => i.sectionName);
-
+    const isValid = state.every((i) => i.sectionName);
     if (isValid) {
       const payload = {
+        contestName: contest.label,
         sectionInfos: state.map((d) => ({
           ...d,
         })),
       };
       console.log(payload);
+      history.goBack();
     } else {
       alert("Please fill all  fields!!!");
     }
@@ -84,6 +97,24 @@ const ContestSectionForm = () => {
       <Card className="mt-4">
         <CardBody className="card-body-override">
           <Form onSubmit={handleSubmit(handleModalSubmit)}>
+            <Col xs="12" sm="12" md="6" lg="6" xl="6" className='mb-3'>
+              <FormGroup>
+                <Label for="contestName">
+                  <span>Contest Name</span>
+                </Label>
+                <CreateableSelect
+                  name="contestName"
+                  id="contestName"
+                  isSearchable
+                  isClearable
+                  classNamePrefix="select"
+                  options={contestDDL}
+                  value={contest}
+                  onChange={data => setContest(data)}
+                  
+                />
+              </FormGroup>
+            </Col>
             <Col xs="12" sm="12" md="12" lg="12" xl="12">
               {state.map((section, idx) => (
                 <Row key={section.rowId} className="rounded rounded-3 mr-1">
@@ -144,15 +175,15 @@ const ContestSectionForm = () => {
                       className="mt-4 bg-danger text-white"
                       onClick={() => handleDelete(idx)}
                     >
-                      <MinusCircle size={16}  />
+                      <MinusCircle size={16} />
                     </button>
                     {state.length === idx + 1 && (
                       <button
                         type="button"
                         className="mt-4 bg-primary text-white"
-                        onClick={()=>handleAdd(section, idx)}
+                        onClick={() => handleAdd(section, idx)}
                       >
-                        <PlusCircle size={16}  />
+                        <PlusCircle size={16} />
                       </button>
                     )}
                   </FormGroup>
@@ -169,7 +200,7 @@ const ContestSectionForm = () => {
           >
             Submit
           </Button>
-          <Button type="cancel" color="danger" outline onClick={() => {}}>
+          <Button type="cancel" color="danger" outline onClick={() => history.goBack()}>
             Cancel
           </Button>
         </CardBody>

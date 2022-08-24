@@ -2,6 +2,7 @@ import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { Card, Col, Row } from "reactstrap";
 import { v4 as uuid } from "uuid";
+import CustomInput from "../../components/custom/CustomInput";
 
 const imagesArray = [
   {
@@ -56,26 +57,20 @@ const Participant = () => {
   //#endregion
 
   //#region events
-  const multipleImagesUpload = (e, sectionIndex) => {
-    console.log(sectionIndex);
-    const files = [...e.target.files];
-    if (files.length > 4) {
-      alert("Images upload less than 5");
-    } else {
-      const newImageUrls = [];
-      files.forEach((image) => newImageUrls?.push(URL.createObjectURL(image)));
-      const _imageURLS = [...imageURLS];
-      const imagesInfo = _imageURLS[sectionIndex];
-      const imagesInfos = newImageUrls?.map((item) => ({
-        imagesId: uuid(),
-        imageURLS: item,
-        imageName: "",
-        file: {},
-      }));
-      imagesInfo.imagesInfos = imagesInfos;
-      _imageURLS[sectionIndex] = imagesInfo;
-      setImageURLs(_imageURLS);
-    }
+  const multipleImagesUpload = (sectionIndex, files) => {
+    const newImageUrls = [];
+    files.forEach((image) => newImageUrls?.push(URL.createObjectURL(image)));
+    const _imageURLS = [...imageURLS];
+    const imagesInfo = _imageURLS[sectionIndex];
+    const imagesInfos = newImageUrls?.map((item) => ({
+      imagesId: uuid(),
+      imageURLS: item,
+      imageName: "",
+      file: {},
+    }));
+    imagesInfo.imagesInfos = imagesInfos;
+    _imageURLS[sectionIndex] = imagesInfo;
+    setImageURLs(_imageURLS);
   };
 
   const singleImagesUpload = (e, sectionIndex, imgageIndex) => {
@@ -119,9 +114,17 @@ const Participant = () => {
     setImageURLs(_imageURLS);
   };
 
+  const onImagesChange = (e, sectionIndex) => {
+    const files = [...e.target.files];
+    if (files.length > 4) {
+      alert("Images upload less than 5");
+    } else {
+      multipleImagesUpload(sectionIndex, files);
+    }
+  };
+  
   const onChangeEvents = (e, sectionIndex, imgageIndex) => {
-    const { value } = e.target;
-
+    const { value } = e.currentTarget;
     const _imageURLS = _.cloneDeep(imageURLS);
     const _imagesIndex = _imageURLS[sectionIndex].imagesInfos[imgageIndex];
     _imagesIndex.imageName = value;
@@ -146,17 +149,11 @@ const Participant = () => {
                       <div>
                         <input
                           type="file"
-                          id="upload"
+                          id={`upload`}
                           multiple
                           accept="image/*"
-                          onChange={(e) =>
-                            multipleImagesUpload(e, sectionIndex)
-                          }
-                          hidden
+                          onChange={(e) => onImagesChange(e, sectionIndex)}
                         />
-                        <label className="upload" htmlFor="upload">
-                          Upload Files
-                        </label>
                       </div>
                       <div>
                         <button onClick={() => removedAll(sectionIndex)}>
@@ -181,16 +178,29 @@ const Participant = () => {
                               width="220"
                               height="200"
                               style={{ borderRadius: 5, marginTop: 8 }}
-                            />                      
-                            <input
-                              type="text"
-                              id={`imageName-${imageSrc.id}${imageInfo.imagesId}`}
-                              name="imageName"
+                            />
+                            <CustomInput
+                              type='text'                              
+                              id={`imageName-${imageSrc.id}-${imageInfo.imagesId}`}
+                              name={`imageName-${imageInfo.imagesId}`}
                               value={imageInfo.imageName}
                               placeholder="Image Name"
                               style={{ width: 220 }}
-                              onChange={(e) => onChangeEvents(e, sectionIndex, imgageIndex )}
+                              onChange={(e) =>
+                                onChangeEvents(e, sectionIndex, imgageIndex)
+                              }
                             />
+                                          
+                            {/* <input
+                              type="text"
+                              id={`imageName-${imageSrc.id}${imageInfo.imagesId}`}
+                              name={`imageName-${imageInfo.imagesId}`}
+                              value={imageInfo.imageName}
+                              placeholder="Image Name"
+                              style={{ width: 220 }}
+                              // onSelect={e => e.target.select()}
+                              onChange={(e) => onChangeEvents(e, sectionIndex, imgageIndex )}
+                            /> */}
                           </div>
                           <div className="d-flex p-2">
                             <input
@@ -198,15 +208,9 @@ const Participant = () => {
                               className="custom-file-input"
                               accept="image/*"
                               alt="Empty"
-                              onChange={(e) =>
-                                singleImagesUpload(e, sectionIndex, imgageIndex)
-                              }
+                              onChange={(e) =>singleImagesUpload(e, sectionIndex, imgageIndex)}
                             />
-                            <button
-                              onClick={() =>
-                                removedSingle(sectionIndex, imgageIndex)
-                              }
-                            >
+                            <button onClick={() =>removedSingle(sectionIndex, imgageIndex)}>
                               Remove
                             </button>
                           </div>

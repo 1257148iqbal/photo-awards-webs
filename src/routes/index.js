@@ -32,6 +32,7 @@ const Routes = () => {
         <Route exact path="/contest" component={Contest} />
         <Route exact path="/contest-section" component={ContestSection} />
         <Route exact path="/participant" component={Participant} />
+        <Route exact path="/contest-section" component={ContestSection} />
         <Route exact path="/contest-section-page" component={ContestSectionForm} />
         <Route exact path="/profile" component={Profile} />
         <Route exact component={Error404} />

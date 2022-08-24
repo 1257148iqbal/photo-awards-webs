@@ -25,7 +25,7 @@ const Login = (props) => {
   const { handleSubmit } = useForm();
   const message = useSelector((state) => state.messageReducer);
   const dispatch = useDispatch();
-  console.log(userDetails, message);
+  console.log(userDetails);
   //#endregion
 
   //#region State

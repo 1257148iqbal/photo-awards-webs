@@ -1,15 +1,22 @@
 import moment from 'moment';
 import React, { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { v4 as uuid } from 'uuid';
 import CustomDatePicker from "../../../components/custom/CustomDatePicker";
 import Sidebar from "../../../components/custom/Sidebar";
 import { serverDate } from '../../../utilitis/Utils';
+import { addContest, toggleContestModal, updateContest } from '../store/actions';
 
 const ContestForm = (props) => {
-  const { isOpenSidebar, setIsOpenSidebar, selectItems } = props;
+  const { selectItems } = props;
+  //#region Hooks
+  const {isOpenModal, selectItemEdit} = useSelector(({contestReducer}) => contestReducer);
+  console.log(selectItemEdit);
+  const dispatch = useDispatch();
 
+  //#endregion
   const { handleSubmit } = useForm();
 const defaultDate = moment(new Date()[0]).format("yyyy-MM-DD");
   //#region  States
@@ -25,7 +32,6 @@ useEffect(() => {
   setEndDate(serverDate(selectItems?.endDate))
 }, [selectItems])
 
-console.log(selectItems);
 
   //#endregion
 
@@ -49,8 +55,12 @@ console.log(selectItems);
       endDate,
       isActive
     }
-    console.log(payload);
-    setIsOpenSidebar(!isOpenSidebar)
+    if(selectItemEdit){
+      dispatch(updateContest({...payload, id: selectItemEdit.id}));
+    } else{
+      dispatch(addContest(payload));
+    }
+    dispatch(toggleContestModal(!isOpenModal))
   };
   //#endregion
   
@@ -62,8 +72,8 @@ console.log(selectItems);
       headerClassName="mb-1"
       contentClassName="pt-0"
       style={{ transition: "0.5s all ease" }}
-      open={isOpenSidebar}
-      toggleSidebar={() => setIsOpenSidebar(!isOpenSidebar)}
+      open={isOpenModal}
+      toggleSidebar={() => dispatch(toggleContestModal(!isOpenModal))}
     >
       <Form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <FormGroup className='mt-3'>
@@ -105,7 +115,7 @@ console.log(selectItems);
               id="status"
               name="status"
               type="checkbox"
-              defaultChecked={selectItems? selectItems?.isRunning: isActive}
+              defaultChecked={selectItems? selectItems?.isActive: isActive}
               onChange={e=>setIsActive(e.target.checked)}
             />
             <span style={{ marginLeft: "25px" }}> Is Running </span>
@@ -119,7 +129,7 @@ console.log(selectItems);
           type="cancel"
           color="danger"
           outline
-          onClick={() => setIsOpenSidebar(!isOpenSidebar)}
+          onClick={() => dispatch(toggleContestModal(!isOpenModal))}
         >
           Cancel
         </Button>

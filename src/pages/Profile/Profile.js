@@ -21,7 +21,7 @@ const Profile = () => {
             <Link className="btn btn-primary mt-2" role="button" to="/contest">
               Add Contest
             </Link>
-            <Link className="btn btn-primary mt-2" role="button" to="/contest-section-page">
+            <Link className="btn btn-primary mt-2" role="button" to="/contest-section">
               Contest Section
             </Link>
             <Link className="btn btn-primary mt-2" role="button" to="/participant">
