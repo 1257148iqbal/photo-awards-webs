@@ -96,3 +96,7 @@ nav ul li {
     cursor: pointer;
     margin-top: 1rem;
   }
+
+  .rdt_TableHeader{
+      display: none !important;
+  }

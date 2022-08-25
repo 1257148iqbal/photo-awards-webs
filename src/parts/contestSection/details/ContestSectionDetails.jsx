@@ -1,10 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Card, Col, Label, Row } from "reactstrap";
 import Sidebar from "../../../components/custom/Sidebar";
+import { toggleContestSectionModal } from "../store/actions";
 
 const ContestSectionDetails = (props) => {
-  const { isOpenSidebar, setIsOpenSidebar, selectItems } = props;
+  const { isOpenModal, selectItems } = props;
 
+  const dispatch = useDispatch();
   //#endregion
 
   return (
@@ -14,13 +17,13 @@ const ContestSectionDetails = (props) => {
       headerClassName="mb-1"
       contentClassName="pt-0"
       style={{ transition: "0.5s all ease" }}
-      open={isOpenSidebar}
-      toggleSidebar={() => setIsOpenSidebar(!isOpenSidebar)}
+      open={isOpenModal}
+      toggleSidebar={() => dispatch(toggleContestSectionModal(!isOpenModal))}
     >
       <Card className='p-2'>
         <Row>
           <Col xs={12}>
-            <h4>{`Contest Name : ${selectItems?.contestName}`}</h4>
+            <h4 className="mb-2">{`Contest Name : ${selectItems?.contestName}`}</h4>
             {selectItems?.contestSections?.map((item) => (
               <div key={item.id}>
                 <div className="custom-form-main">

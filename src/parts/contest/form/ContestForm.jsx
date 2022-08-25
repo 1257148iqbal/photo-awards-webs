@@ -12,8 +12,7 @@ import { addContest, toggleContestModal, updateContest } from '../store/actions'
 const ContestForm = (props) => {
   const { selectItems } = props;
   //#region Hooks
-  const {isOpenModal, selectItemEdit} = useSelector(({contestReducer}) => contestReducer);
-  console.log(selectItemEdit);
+  const {isOpenModal} = useSelector(({contestReducer}) => contestReducer);
   const dispatch = useDispatch();
 
   //#endregion
@@ -55,8 +54,8 @@ useEffect(() => {
       endDate,
       isActive
     }
-    if(selectItemEdit){
-      dispatch(updateContest({...payload, id: selectItemEdit.id}));
+    if(selectItems){
+      dispatch(updateContest({...payload, id: selectItems.id}));
     } else{
       dispatch(addContest(payload));
     }
@@ -68,7 +67,7 @@ useEffect(() => {
   <Fragment>
       <Sidebar
       size="lg"
-      title="New Contest Form"
+      title={`${selectItems ? "Edit Contest" : "New Contest"}`}
       headerClassName="mb-1"
       contentClassName="pt-0"
       style={{ transition: "0.5s all ease" }}

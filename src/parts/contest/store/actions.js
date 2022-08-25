@@ -35,7 +35,6 @@ export const fetchContestByID = (payload) => async dispatch =>{
 
 //update 
 export const updateContest = (payload) => async dispatch =>{
-    console.log(payload);
     dispatch({
         type: UPDATE_CONTEST,
         payload: payload
@@ -51,7 +50,6 @@ export const deleteContest = (payload) => async dispatch =>{
 }
 
 //modal open
-//Open Sidebar
 export const toggleContestModal = condition => dispatch => {
     dispatch({
       type: TOGGLE_CONTEST_MODAL,

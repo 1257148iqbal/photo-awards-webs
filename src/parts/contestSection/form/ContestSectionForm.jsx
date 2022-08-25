@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MinusCircle, PlusCircle } from "react-feather";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import CreateableSelect from "react-select/creatable";
 import {
@@ -16,10 +16,12 @@ import {
   Row
 } from "reactstrap";
 import { v4 as uuid } from "uuid";
+import { updateContest } from "../../contest/store/actions";
+import { addContestSection } from "../store/actions";
 
 const initialState = [
   {
-    rowId: uuid(),
+    id: uuid(),
     sectionName: "",
     imageCount: "4",
     imageLength: "1080",
@@ -32,8 +34,10 @@ const ContestSectionForm = () => {
 
   //#region Hooks
   const history = useHistory();
+  const dispatch = useDispatch();
   const {items} = useSelector(({contestReducer}) => contestReducer);
   const contestDDL= items.map(item=>({
+    ...item,
     label: item.contestName,
     value: item.id,
   }))
@@ -43,18 +47,19 @@ const ContestSectionForm = () => {
   const [state, setState] = useState(initialState);
   const [contest, setContest] = useState(null);
   //#endregion
+
   //#region UDFs
 
   //#endregion
+  
   //#region  Events
   // add new row
-
   const handleAdd = (section, idx) => {
     const newIndex = idx + 1;
-    state.splice(newIndex, 0, { ...section, rowId: uuid(), sectionName: "" });
+    state.splice(newIndex, 0, { ...section, id: uuid(), sectionName: "" });
     setState((prev) => [...prev]);
   };
-
+  
   // remove  row
   const handleDelete = (idx) => {
     const _sectionInfo = [...state];
@@ -66,7 +71,7 @@ const ContestSectionForm = () => {
     const { name, value } = e.target;
     const _sectionInfo = [...state];
     _sectionInfo.map((item) => {
-      if (item.rowId === rowId) {
+      if (item.id === rowId) {
         item[name] = value;
       }
       return item;
@@ -76,15 +81,19 @@ const ContestSectionForm = () => {
 
   // for submit
   const handleModalSubmit = () => {
-    const isValid = state.every((i) => i.sectionName);
+    const isValid = state.every((i) => i.sectionName && contest);
     if (isValid) {
       const payload = {
+        id: contest.value,
         contestName: contest.label,
-        sectionInfos: state.map((d) => ({
+        startDate: contest.startDate,
+        endDate: contest.endDate,
+        contestSections: state.map((d) => ({
           ...d,
         })),
       };
-      console.log(payload);
+      dispatch(addContestSection(payload));
+      dispatch(updateContest(payload));
       history.goBack();
     } else {
       alert("Please fill all  fields!!!");
@@ -117,14 +126,14 @@ const ContestSectionForm = () => {
             </Col>
             <Col xs="12" sm="12" md="12" lg="12" xl="12">
               {state.map((section, idx) => (
-                <Row key={section.rowId} className="rounded rounded-3 mr-1">
+                <Row key={section.id} className="rounded rounded-3 mr-1">
                   <FormGroup tag={Col} xs={12} sm={12} md={3} lg={3} xl={3}>
                     <Label for="sectionName">Section Name</Label>
                     <Input
                       name="sectionName"
-                      id={`sectionName${section.rowId}`}
+                      id={`sectionName${section.id}`}
                       value={section.sectionName}
-                      onChange={(e) => onChangeEvents(e, section.rowId)}
+                      onChange={(e) => onChangeEvents(e, section.id)}
                       placeholder="Section Name"
                     />
                   </FormGroup>
@@ -134,7 +143,7 @@ const ContestSectionForm = () => {
                       name="imageCount"
                       id="imageCount"
                       value={section.imageCount}
-                      onChange={(e) => onChangeEvents(e, section.rowId)}
+                      onChange={(e) => onChangeEvents(e, section.id)}
                       placeholder="Image Count"
                     />
                   </FormGroup>
@@ -144,7 +153,7 @@ const ContestSectionForm = () => {
                       name="imageSize"
                       id="imageSize"
                       value={section.imageSize}
-                      onChange={(e) => onChangeEvents(e, section.rowId)}
+                      onChange={(e) => onChangeEvents(e, section.id)}
                       placeholder="Image Size"
                     />
                   </FormGroup>
@@ -154,7 +163,7 @@ const ContestSectionForm = () => {
                       name="imageLength"
                       id="imageLength"
                       value={section.imageLength}
-                      onChange={(e) => onChangeEvents(e, section.rowId)}
+                      onChange={(e) => onChangeEvents(e, section.id)}
                       placeholder="Image Length"
                     />
                   </FormGroup>
@@ -164,7 +173,7 @@ const ContestSectionForm = () => {
                       name="imageWidth"
                       id="imageWidth"
                       value={section.imageWidth}
-                      onChange={(e) => onChangeEvents(e, section.rowId)}
+                      onChange={(e) => onChangeEvents(e, section.id)}
                       placeholder="Image Width"
                     />
                   </FormGroup>
