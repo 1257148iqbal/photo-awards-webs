@@ -11,7 +11,7 @@ const initialTime = {
 
 const Results = () => {
   //#region State
-  const [expiryTime, setExpiryTime] = useState("30 august 2022 15:30:25");
+  const [expiryTime, setExpiryTime] = useState("30 august 2023 15:30:25");
   const [countdownTime, setCountdownTime] = useState(initialTime);
   //#endregion
 

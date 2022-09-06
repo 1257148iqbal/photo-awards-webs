@@ -9,7 +9,7 @@ const initialTime={
 
 const Results = () => {
   //#region State
-  const [expiryTime, setExpiryTime] = useState("25 july 2022 15:30:25");
+  const [expiryTime, setExpiryTime] = useState("25 july 2023 15:30:25");
   const [countdownTime, setCountdownTime] = useState(initialTime);
 //#endregion
 
